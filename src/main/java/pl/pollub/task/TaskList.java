@@ -1,11 +1,11 @@
 package pl.pollub.task;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Component
 public class TaskList {
@@ -15,7 +15,7 @@ public class TaskList {
     private final AtomicInteger counter = new AtomicInteger();
 
     public Task add(NewTask newTask){
-        Task created = new Task(generateId(), newTask.getContent());
+        Task created = new Task(generateId(), newTask.getContent(), Calendar.getInstance().getTime());
         tasks.add(created);
         return created;
     }
