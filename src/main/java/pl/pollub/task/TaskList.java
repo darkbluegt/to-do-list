@@ -27,4 +27,9 @@ public class TaskList {
     public List<Task> getAllTasks() {
         return tasks;
     }
+
+    public boolean remove(Task task) {
+        return tasks.remove(task);
+    }
+
 }

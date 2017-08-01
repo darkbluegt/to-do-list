@@ -2,10 +2,7 @@ package pl.pollub.task;
 
 import static org.junit.Assert.*;
 
-import java.util.UUID;
-
 import org.junit.Test;
-import org.mockito.Mockito;
 
 public class TaskListTest {
 
@@ -19,16 +16,17 @@ public class TaskListTest {
         assertTrue(taskList.getAllTasks().contains(created1));
     }
 
-
+    @Test
     public void ICanRemoveExistingTask(){
         //given: a task
         TaskList taskList = new TaskList();
-        taskList.add(new NewTask( "task1"));
+        Task task = taskList.add(new NewTask( "task1"));
 
         //when: i remove it
-        Task task = taskList.getAllTasks().get(0);
+        //Task task = ;
+        taskList.remove(task);
 
-        //then: it diesappears
+        //then: it disappears
+        assertFalse(taskList.getAllTasks().contains(task));
     }
-
 }
