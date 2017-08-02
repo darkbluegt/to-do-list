@@ -5,30 +5,46 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import pl.pollub.ArchivedTask.ArchivedTask;
 
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
 
-    private final TaskList taskList;
+    private final TaskService taskService;
 
     @Autowired
-    public TaskController(TaskList taskList) {
-        this.taskList = taskList;
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody Task addTask(@RequestBody NewTask newTask) {
-        return taskList.add(newTask);
+        return taskService.addNewTask(newTask);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public @ResponseBody List<Task> getAllTasks() {
-        return taskList.getAllTasks();
+    @RequestMapping(value = "/active", method = RequestMethod.GET)
+    public @ResponseBody List<Task> getAllActiveTasks() {
+        return taskService.getAllActive();
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public @ResponseBody boolean deleteTaskById(@RequestBody Task task){
-        return taskList.remove(task);
+    @RequestMapping(value = "/archived", method = RequestMethod.GET)
+    public @ResponseBody List<ArchivedTask> getAllArchivedTasks() {
+        return taskService.getAllArchived();
+    }
+
+    @RequestMapping(value = "/archive/{id}", method = RequestMethod.PUT)
+    public @ResponseBody ArchivedTask archiveTaskById(@PathVariable int id) throws RuntimeException{
+        return taskService.archiveTaskById(id);
+    }
+
+    @RequestMapping(value = "/restore/{id}", method = RequestMethod.PUT)
+    public @ResponseBody Task restoreArchivedTaskById(@PathVariable int id) throws RuntimeException{
+        return taskService.restoreTaskById(id);
+    }
+
+    @RequestMapping(value = "/archive/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody Task deleteArchivedTaskById(@PathVariable int id) throws RuntimeException{
+        return taskService.deleteArchivedTaskById(id);
     }
 }

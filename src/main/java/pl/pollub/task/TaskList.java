@@ -1,6 +1,9 @@
 package pl.pollub.task;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pl.pollub.ArchivedTask.ArchivedTask;
+import pl.pollub.ArchivedTask.ArchivedTaskList;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,4 +35,17 @@ public class TaskList {
         return tasks.remove(task);
     }
 
+    public Task restore(ArchivedTask archivedTask){
+        Task restoredTask = new Task(archivedTask.getId(), archivedTask.getContent(), archivedTask.getAddedDate());
+        tasks.add(restoredTask);
+        return restoredTask;
+    }
+
+    public Task findById(int id){
+        for(Task task : tasks){
+            if(task.getId() == id)
+                return task;
+        }
+        throw new TaskNotFoundException(id);
+    }
 }

@@ -1,5 +1,6 @@
 package pl.pollub.task;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
@@ -7,9 +8,9 @@ import java.util.Date;
 @Data
 public class Task {
 
-    private final int id;
+    protected final int id;
 
-    private final String content;
+    protected final String content;
 
-    private final Date addedDate;
+    protected final Date addedDate;
 }
